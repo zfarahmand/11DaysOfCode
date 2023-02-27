@@ -3,6 +3,24 @@
 body {
     font-family: IRANSans;
     font-weight: 300;
+    text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+p {
+    color: #8f8f8f;
+}
+
+.container-fluid {
+    padding: 7% 15%;
+}
+
+.colored-section {
+    background-color: #ff4c68;
+    color: #fff;
 }
 
 /* Navigation Bar */
@@ -29,19 +47,14 @@ body {
 
 /* Header */
 
-#title {
-    background-color: #ff4c68;
-    color: #fff;
-}
-
 .slogan {
     font-size: 3.5rem;
-    font-weight: bold;
     line-height: 1.5;
 }
 
 .page-container {
     padding: 0 9% 7%;
+    text-align: right;
 }
 
 .phone {
@@ -64,9 +77,7 @@ body {
 
 #features {
     background-color: #fff;
-    padding: 7% 15%;
     position: relative;
-    text-align: center;
 }
 
 .feature-item {
@@ -83,22 +94,15 @@ body {
 
 #features h3 {
     font-size: 1.5rem;
-    font-weight: bold;
     line-height: 2;
     margin: 1rem 0 0.25rem;
-}
-
-#features p {
-    color: #8f8f8f;
 }
 
 /* Testimonial Section */
 
 #testimonials {
     background-color: #ef8172;
-    color: #ffffff;
-    padding: 7% 15%;
-    text-align: center;
+    padding-bottom: 0;
 }
 
 #testimonials h2 {
@@ -122,29 +126,18 @@ body {
 #press {
     background-color: #ef8172;
     padding-bottom: 3%;
-    text-align: center;
 }
 
 #press .press-item {
-    margin: 10px 20px 30px;
+    margin: 0 20px 30px;
     max-width: 150px;
     width: 15%;
 }
 
 /* Pricing Section */
 
-#pricing {
-    padding: 7% 15%;
-    text-align: center;
-}
-
-#pricing p {
-    color: #8f8f8f;
-}
-
 #pricing>h2 {
     font-size: 40px;
-    font-weight: bold;
     line-height: 1.5;
     /* padding: 25px 0; */
 }
@@ -159,8 +152,13 @@ body {
 
 .pricing-card h2 {
     font-size: 1.5rem;
-    font-weight: bold;
     margin: 8px 0;
+}
+
+.pricing-card h3 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-top: 8px;
 }
 
 .pricing-card p {
@@ -179,15 +177,9 @@ body {
 
 /* Call To Action Section` */
 
-#cta {
-    background-color: #ff4c68;
-    color: #fff;
-    padding: 5% 15%;
-    text-align: center;
-}
-
 #cta h3 {
-    font-weight: bold;
+    font-size: 3rem;
+    line-height: 1.5;
     padding: 3% 0;
 }
 
@@ -196,12 +188,6 @@ body {
 }
 
 /* Footer Section */
-
-#footer {
-    color: #8f8f8f;
-    padding: 5% 15% 3%;
-    text-align: center;
-}
 
 .social-icons {
     list-style: none;
@@ -214,7 +200,7 @@ body {
 
 .social-icons li a {
     color: #424242;
-    margin: 0 10px;
+    margin: 10px 20px;
     text-decoration: none;
 }
 
