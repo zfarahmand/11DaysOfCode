@@ -8,7 +8,7 @@ body {
 /* Navigation Bar */
 
 .navbar {
-    margin-bottom: 4.5rem;
+    margin-bottom: 4rem;
     padding: 20px 0 0;
 }
 
@@ -41,13 +41,15 @@ body {
 }
 
 .page-container {
-    padding: 0 9% 3%;
+    padding: 0 9% 7%;
 }
 
 .phone {
     display: block;
     margin: 0 auto;
     max-width: 300px;
+    position: absolute;
+    left: 20%;
     transform: rotate(-20deg);
     width: 55%;
 }
@@ -61,7 +63,9 @@ body {
 /* Features Section */
 
 #features {
+    background-color: #fff;
     padding: 7% 15%;
+    position: relative;
     text-align: center;
 }
 
@@ -125,4 +129,95 @@ body {
     margin: 10px 20px 30px;
     max-width: 150px;
     width: 15%;
+}
+
+/* Pricing Section */
+
+#pricing {
+    padding: 7% 15%;
+    text-align: center;
+}
+
+#pricing p {
+    color: #8f8f8f;
+}
+
+#pricing>h2 {
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 1.5;
+    /* padding: 25px 0; */
+}
+
+.pricing-card {
+    margin: 3% 2%;
+}
+
+.pricing-card h1{
+    font-size: 1.4rem;
+}
+
+.pricing-card h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+.pricing-card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.pricing-card .card-text {
+    margin: 6% 0 10%;
+}
+
+.pricing-card small {
+    font-size: 1rem;
+}
+
+/* Call To Action Section` */
+
+#cta {
+    background-color: #ff4c68;
+    color: #fff;
+    padding: 5% 15%;
+    text-align: center;
+}
+
+#cta h3 {
+    font-weight: bold;
+    padding: 3% 0;
+}
+
+.cta-download-button {
+    margin: 0 10px;
+}
+
+/* Footer Section */
+
+#footer {
+    color: #8f8f8f;
+    padding: 5% 15% 3%;
+    text-align: center;
+}
+
+.social-icons {
+    list-style: none;
+    padding: 0;
+}
+
+.social-icons li {
+    display: inline-block;
+}
+
+.social-icons li a {
+    color: #424242;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.social-icons li a:hover {
+    color: #6d6d6d;
 }

@@ -52,8 +52,10 @@
       <div class="row">
         <div class="col-lg-6">
           <h1 class="slogan">با سگ‌های بامزه و دوست‌داشتنی در نزدیکی خود ملاقات کنید!</h1>
-          <button type="button" class="download-button btn btn-lg btn-dark"><i class="fa-brands fa-apple"></i> دانلود</button>
-          <button type="button" class="download-button btn btn-lg btn-outline-light"><i class="fa-brands fa-google-play"></i>
+          <button type="button" class="download-button btn btn-lg btn-dark"><i class="fa-brands fa-apple"></i>
+            دانلود</button>
+          <button type="button" class="download-button btn btn-lg btn-outline-light"><i
+              class="fa-brands fa-google-play"></i>
             دانلود</button>
         </div>
         <div class="col-lg-6">
@@ -117,7 +119,7 @@
 
 
   <!-- Press -->
-  
+
 
   <section id="press">
     <img class="press-item" src="images/techcrunch.png" alt="tc-logo">
@@ -132,33 +134,60 @@
 
   <section id="pricing">
 
-    <h2>A Plan for Every Dog's Needs</h2>
-    <p>Simple and affordable price plans for your and your dog.</p>
+    <h2>پلنی برای نیاز همه سگ‌ها</h2>
+    <p>پلن‌های قیمتی مناسب و ارزان برای استفاده سگ شما!</p>
 
-
-    <h3>Chihuahua</h3>
-    <h2>Free</h2>
-    <p>5 Matches Per Day</p>
-    <p>10 Messages Per Day</p>
-    <p>Unlimited App Usage</p>
-    <button type="button">Sign Up</button>
-
-
-    <h3>Labrador</h3>
-    <h2>$49 / mo</h2>
-    <p>Unlimited Matches</p>
-    <p>Unlimited Messages</p>
-    <p>Unlimited App Usage</p>
-    <button type="button">Sign Up</button>
-
-
-    <h3>Mastiff</h3>
-    <h2>$99 / mo</h2>
-    <p>Pirority Listing</p>
-    <p>Unlimited Matches</p>
-    <p>Unlimited Messages</p>
-    <p>Unlimited App Usage</p>
-    <button type="button">Sign Up</button>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card shadow-sm pricing-card">
+          <div class="card-header">
+            <h3>شی‌هوآ‌هو‌آ</h3>
+          </div>
+          <div class="card-body">
+            <h2>رایگان</h2>
+            <div class="card-text">
+              <p>معرفی روزانه 50 مورد</p>
+              <p>ارسال 10 پیام در روز</p>
+              <p>استفاده بدون محدودیت</p>
+            </div>
+            <button type="button" class="btn btn-lg btn-outline-dark w-100">ثبت نام</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card shadow-sm pricing-card">
+          <div class="card-header">
+            <h3>لابرادور</h3>
+          </div>
+          <div class="card-body">
+            <h2>50 هزار تومان<small class="text-muted fw-light"> /ماهیانه</small></h2>
+            <div class="card-text">
+              <p>معروفی بدون محدودیت موارد</p>
+              <p>ارسال پیام بدون محدودیت</p>
+              <p>استفاده بدون محدودیت</p>
+            </div>
+            <button type="button" class="btn btn-lg btn-dark w-100">ثبت نام</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card shadow-sm pricing-card">
+          <div class="card-header">
+            <h3>ماستیف</h3>
+          </div>
+          <div class="card-body">
+            <h2>100 هزار تومان<small class="text-muted fw-light"> /ماهیانه</small></h2>
+            <div class="card-text">
+              <p>قرار گرفتن در اولویت‌های لیست انتظار</p>
+              <p>معروفی بدون محدودیت موارد</p>
+              <p>ارسال پیام بدون محدودیت</p>
+              <p>استفاده بدون محدودیت</p>
+            </div>
+            <button type="button" class="btn btn-lg btn-dark w-100">ثبت نام</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </section>
 
@@ -167,9 +196,9 @@
 
   <section id="cta">
 
-    <h3>Find the True Love of Your Dog's Life Today.</h3>
-    <button type="button">Download</button>
-    <button type="button">Download</button>
+    <h3>عشق واقعی زندگی سگ خود را همین حالا پیدا کنید!</h3>
+    <button type="button" class="cta-download-button btn btn-lg btn-dark"><i class="fa-brands fa-apple"></i> دانلود</button>
+    <button type="button" class="cta-download-button btn btn-lg btn-light"><i class="fa-brands fa-google-play"></i> دانلود</button>
 
   </section>
 
@@ -178,13 +207,24 @@
 
   <footer id="footer">
 
-    <p>© Copyright TinDog</p>
+    <ul class="social-icons">
+      <li><a href="#" class="fa-brands fa-twitter fa-lg"></a></li>
+      <li><a href="#" class="fa-brands fa-facebook fa-lg"></a></li>
+      <li><a href="#" class="fa-brands fa-instagram fa-lg"></a></li>
+      <li><a href="#" class="fa-solid fa-envelope fa-lg"></a></li>
+    </ul>
+
+    <p>© همه حقوق برای تینداگ محفوظ است.</p>
 
   </footer>
 
   <!-- Bootstrap Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+    integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
