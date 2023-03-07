@@ -12,4 +12,16 @@ Challenge Solution:
 /*
 Challenge Solution:
 */
-document.querySelector("#list .item:first-child a").style.color = "red";
+// document.querySelector("#list .item:first-child a").style.color = "red";
+
+/*
+Challenge Solution:
+*/
+// let button = document.querySelector(".btn");
+// button.style.backgroundColor = "yellow";
+// button.style.border = "1px solid #fff";
+
+/*
+Challenge Solution:
+*/
+document.getElementById("title").classList.add("huge");
