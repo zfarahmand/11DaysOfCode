@@ -11,6 +11,7 @@ buttons.forEach(element => {
     element.addEventListener("click", function () {
         let buttonInnerHTML = this.innerHTML;
         switchSounds(buttonInnerHTML);
+        buttonAnimation(buttonInnerHTML);
     });
 });
 
@@ -18,6 +19,7 @@ buttons.forEach(element => {
 document.addEventListener("keydown" , function(event) {
     let tappedKey = event.key;
     switchSounds(tappedKey);
+    buttonAnimation(tappedKey);
 }); 
 
 function switchSounds(key) {
@@ -53,6 +55,21 @@ function switchSounds(key) {
         default:
             audio = new Audio(audioFolder + "tom-1.mp3");
             audio.play();
+    }
+}
+
+function buttonAnimation(eventKey) {
+    // let lastPressed = document.querySelectorAll(".pressed");
+    // if(lastPressed) {
+    //     lastPressed.forEach(element => {
+    //         element.classList.remove("pressed");
+    //     });
+    // }
+    let allowedKeys = ['w' , 'a' , 's' , 'd' , 'j' , 'k' , 'l'];
+    if(allowedKeys.includes(eventKey)) {
+        let activeButton = document.querySelector("." + eventKey);
+        activeButton.classList.add("pressed");
+        setTimeout(function() { activeButton.classList.remove("pressed");} , 100);
     }
 }
 
