@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const ejs = require('ejs');
 
 let newItems = [ "دیدن 10 قسمت از دوره Tailwind" , "خواندن 10 صفحه کتاب" , "نوشتن" ];
+let workItems = [];
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -11,8 +12,6 @@ app.use(express.static("public"));
 
 app.get("/" , (req , res) => {
     let today = new Date();
-    let currentDay = today.getDay();
-    const weekDays = ["Sunday" , "Monday" , "Tuesday" , "Wednesday" , "Thursday" , "Friday" , "Saturday"];
     let kindOfDay;
 
     // A better way:
@@ -22,32 +21,33 @@ app.get("/" , (req , res) => {
         day: today.toLocaleDateString('fa-IR' , {day: options.day}),
         month: today.toLocaleDateString('fa-IR' , {month: options.month}),
     };
-
-    if(currentDay <= 6 && currentDay >= 0){
-        if(currentDay === 6 || currentDay === 0) {
-            kindOfDay = "weekend";
-         }
-         else {
-             kindOfDay = weekDays[currentDay];
-         }
-    }
-    else {
-        console.log("Error: Current day is equal to: " + currentDay)
-    }
+    const farsiDateFormatted = farsiDate.dayName + "," + farsiDate.day + " ام " + farsiDate.month;
     
 
     res.render("index" , {
-        day: kindOfDay,
-        farsiDate: farsiDate,
-        newItems: newItems
+        listTitle: farsiDateFormatted,
+        newItems: newItems,
+        redirect: "/"
     });
 
 });
 
 app.post("/" , (req , res) => {
     newItems.push(req.body.newItem);
-
     res.redirect("/");
+});
+
+app.get("/work" , (req, res) => {
+    res.render("index" , { listTitle: "لیست کاری" , newItems: workItems , redirect: "/work" });
+});
+
+app.post("/work" , (req, res) => {
+    workItems.push(req.body.newItem);
+    res.redirect("/work");
+});
+
+app.get("/about" , (req , res) => {
+    res.render("about" , {});
 });
 
 app.listen(3000 , () => {
