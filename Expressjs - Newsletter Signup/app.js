@@ -16,10 +16,6 @@ app.use(express.static("public"));
 
 
 app.get('/', (req, res) => {
-    // https.request(url , options , (response) => {
-    //     console.log(response);
-    // });
-
     res.sendFile(__dirname + "/signup.html");
 });
 
@@ -60,7 +56,7 @@ app.post('/', (req, res) => {
         })
     });
 
-    // request.write(jsonData);
+    request.write(jsonData);
     request.end();
 
     // res.send();
