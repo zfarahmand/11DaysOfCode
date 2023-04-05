@@ -1,9 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
+const date = require(__dirname + "/date.js");
 
-let newItems = [ "دیدن 10 قسمت از دوره Tailwind" , "خواندن 10 صفحه کتاب" , "نوشتن" ];
-let workItems = [];
+const newItems = [ "دیدن 10 قسمت از دوره Tailwind" , "خواندن 10 صفحه کتاب" , "نوشتن" ];
+const workItems = [];
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -11,18 +12,9 @@ app.set('view engine' , 'ejs');
 app.use(express.static("public"));
 
 app.get("/" , (req , res) => {
-    let today = new Date();
-    let kindOfDay;
+    const farsiDate = date.getDate();
 
-    // A better way:
-    const options = { weekday: 'long' , day: 'numeric' , month: 'long' , year: 'numeric' };
-    const farsiDate = {
-        dayName: today.toLocaleDateString('fa-IR' , {weekday: options.weekday}),
-        day: today.toLocaleDateString('fa-IR' , {day: options.day}),
-        month: today.toLocaleDateString('fa-IR' , {month: options.month}),
-    };
     const farsiDateFormatted = farsiDate.dayName + "," + farsiDate.day + " ام " + farsiDate.month;
-    
 
     res.render("index" , {
         listTitle: farsiDateFormatted,
