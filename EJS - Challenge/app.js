@@ -20,9 +20,20 @@ app.use(express.static("public"));
 
 
 app.get("/" , (req , res) => {
+  const truncatedPosts = []; // It was far better if you'd used javascript substring(0,100) method!
+  
+  posts.forEach(function(post) {
+    truncatedPosts.push({
+      title: post.title,
+      content: _string.truncate(post.content , {
+        'length': 100
+      })
+    });
+  });
+
   res.render("home" , {
     homeStartingContent: homeStartingContent,
-    posts: posts
+    posts: truncatedPosts
   } );
 });
 
