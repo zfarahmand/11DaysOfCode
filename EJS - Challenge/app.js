@@ -55,7 +55,19 @@ app.post("/compose" , (req, res) => {
 });
 
 app.get("/posts/:title" , (req , res) => {
-  console.log(req.params.title);
+  let found = false;
+  posts.forEach(function(post) {
+    if(post.title === req.params.title) {
+      
+      found = true;
+    }
+  });
+  if(found) {
+    res.send("Match found!");
+  }
+  else {
+    res.send("404");
+  }
 });
 
 
