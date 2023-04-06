@@ -57,15 +57,19 @@ app.post("/compose" , (req, res) => {
 
 app.get("/posts/:title" , (req , res) => {
   let found = false;
+  let foundPost;
   posts.forEach(function(post) {
     if(_string.lowerCase(post.title) === _string.lowerCase(req.params.title)) {
-      found = true;
+      foundPost = {
+        title: post.title,
+        content: post.content
+      }
+      res.render("post" , {
+        post: foundPost
+      })
     }
   });
-  if(found) {
-    res.send("Match found!");
-  }
-  else {
+  if(!found) {
     res.send("404");
   }
 });
