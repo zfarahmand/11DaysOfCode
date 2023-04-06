@@ -54,7 +54,9 @@ app.post("/compose" , (req, res) => {
   res.redirect("/");
 });
 
-
+app.get("/posts/:title" , (req , res) => {
+  console.log(req.params.title);
+});
 
 
 app.listen(3000, function() {
