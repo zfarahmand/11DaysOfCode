@@ -42,6 +42,12 @@ app.get("/compose" , (req , res) => {
   res.render("compose");
 });
 
+app.post("/compose" , (req, res) => {
+  let content = req.body.content;
+
+  console.log(content);
+});
+
 
 
 
