@@ -13,13 +13,13 @@ async function main() {
   });
   const Fruit = mongoose.model("Fruit" , fruitSchema);
 
-  const fruit = new Fruit({
+  const apple = new Fruit({
     name: "Apple",
     rating: 8,
     review: "Great fruit when you're hungry!"
   });
 
-  // await fruit.save();
+  // await apple.save();
 
   const personSchema = new mongoose.Schema({
     name: String,
@@ -34,4 +34,31 @@ async function main() {
   });
 
   await person.save();
+
+  const kiwi = new Fruit({
+    name: "Kiwi",
+    rating: 9,
+    review: "Fairly sour."
+  });
+
+  const orange = new Fruit({
+    name: "Orange",
+    rating: 10,
+    review: "Has a beautiful color!"
+  });
+
+  const banana = new Fruit({
+    name: "Banana",
+    rating: 10,
+    review: "Nice texture and easy to eat!"
+  });
+
+  Fruit.insertMany([
+    apple, kiwi, orange,banana    
+  ]).then(function () {
+    console.log("Successfully saved defult items to DB");
+  })
+  .catch(function (err) {
+    console.log(err);
+  });
 }
