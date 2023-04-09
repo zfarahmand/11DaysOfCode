@@ -1,0 +1,15 @@
+{
+  "name": "mongodb-fruits-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zahra Farahmand",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^5.2.0",
+    "mongoose": "^7.0.3"
+  }
+}
