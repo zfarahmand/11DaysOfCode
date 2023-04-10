@@ -11,7 +11,7 @@ async function main() {
     rating: Number,
     review: String
   });
-  const Fruit = mongoose.model("Fruit" , fruitSchema);
+  const Fruit = mongoose.model("Fruit", fruitSchema);
 
   const apple = new Fruit({
     name: "Apple",
@@ -26,7 +26,7 @@ async function main() {
     age: Number
   });
 
-  const Person = new mongoose.model("Person" , personSchema);
+  const Person = new mongoose.model("Person", personSchema);
 
   const person = new Person({
     name: "John",
@@ -53,12 +53,26 @@ async function main() {
     review: "Nice texture and easy to eat!"
   });
 
-  Fruit.insertMany([
-    apple, kiwi, orange,banana    
-  ]).then(function () {
-    console.log("Successfully saved defult items to DB");
-  })
-  .catch(function (err) {
+  // Fruit.insertMany([
+  //   apple, kiwi, orange,banana    
+  // ]).then(function () {
+  //   console.log("Successfully saved defult items to DB");
+  // })
+  // .catch(function (err) {
+  //   console.log(err);
+  // });
+
+  ////////////////////////////// Query/////////////////////////////////////////////////
+
+Fruit.find().select('name').exec().then(function(fruits) {
+  mongoose.connection.close();  
+  
+  fruits.forEach(function(fruit) {
+      console.log(fruit.name);
+    });
+  }).catch(function(err) {
     console.log(err);
   });
+
+  // Tank.find({ size: 'small' }).where('createdDate').gt(oneYearAgo).exec(callback);
 }
