@@ -22,18 +22,18 @@ async function main() {
   });
   const Fruit = mongoose.model("Fruit", fruitSchema);
 
-  // const apple = new Fruit({
-  //   name: "Apple",
-  //   rating: 40,
-  //   review: "Great fruit when you're hungry!"
-  // });
-
-  const peach = new Fruit({
-    rating: 10,
-    review: "Peaches are truely lovely!"
+  const apple = new Fruit({
+    name: "Apple",
+    rating: 8,
+    review: "Great fruit when you're hungry!"
   });
 
-  await peach.save();
+  // const peach = new Fruit({
+  //   rating: 10,
+  //   review: "Peaches are truely lovely!"
+  // });
+
+  // await apple.save();
 
   // const personSchema = new mongoose.Schema({
   //   name: String,
@@ -91,5 +91,21 @@ async function main() {
   // Tank.find({ size: 'small' }).where('createdDate').gt(oneYearAgo).exec(callback);
 
 
+  ///////////////////////////////////////////// Update /////////////////////////////////////////////////
 
+  Fruit.updateOne({_id: "64343016fe693b46f1b4965f"} , {name: "Peach" , rating: 10 , review: "Peaches are truely lovely!"}).then(function() {
+    console.log("Succesfully updated the document!");
+  }).catch(function(err) {
+    console.log(err);
+  });
+
+
+    ///////////////////////////////////////////// Delete /////////////////////////////////////////////////
+
+    Fruit.deleteMany({name: "Apple2"}).then(function() {
+      mongoose.connection.close();
+      console.log("The document was succesfully deleted!");
+    }).catch(function(err) {
+      console.log(err);
+    })
 }
