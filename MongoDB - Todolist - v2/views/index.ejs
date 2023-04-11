@@ -1,0 +1,23 @@
+<%- include('header'); -%>
+    <div class="box" id="heading">
+        <h2>
+            <%= listTitle %>
+        </h2>
+    </div>
+
+
+    <div class="box">
+        <% for(let i=0; i < newItems.length; i++) { %>
+            <div class="item">
+                <input type="checkbox">
+                <p><%= newItems[i] %></p>
+            </div>
+        <% } %>
+
+        <form action="<%= redirect %>" method="post">
+            <input type="text" name="newItem" placeholder="آیتم جدید" autocomplete="off">
+            <button type="submit" name="button">+</button>
+        </form>
+    </div>
+
+    <%- include('footer'); -%>
