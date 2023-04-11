@@ -11,7 +11,7 @@ async function main() {
   const fruitSchema = new mongoose.Schema({
     name: {
       type: String,
-      required: [true , "You have forgotten to specify the name!"]
+      required: [true, "You have forgotten to specify the name!"]
     },
     rating: {
       type: Number,
@@ -35,12 +35,46 @@ async function main() {
 
   // await apple.save();
 
-  // const personSchema = new mongoose.Schema({
-  //   name: String,
-  //   age: Number
-  // });
+  const personSchema = new mongoose.Schema({
+    name: String,
+    age: Number,
+    favoriteFruit: fruitSchema
+  });
 
-  // const Person = new mongoose.model("Person", personSchema);
+  const Person = new mongoose.model("Person", personSchema);
+
+  const pineapple = new Fruit({
+    name: "Pineapple",
+    rating: 10,
+    review: "Great fruit! Sour and sweet!"
+  });
+
+  // await pineapple.save();
+
+  const amy = new Person({
+    name: "Amy",
+    age: "30",
+    favoriteFruit: pineapple
+  });
+
+  // await amy.save();
+
+
+  const strawberry = new Fruit({
+    name: "Strawberry",
+    rating: 10,
+    review: "Nice and juicy!"
+  });
+
+  await strawberry.save();
+
+  await Person.updateOne({ name: "John" }, { favoriteFruit: strawberry })
+    .then(() => {
+      console.log("Succesfully updated the document.");
+    })
+    .catch(err => console.log(err));
+
+  mongoose.connection.close();
 
   // const person = new Person({
   //   name: "John",
@@ -78,34 +112,34 @@ async function main() {
 
   ////////////////////////////// Query/////////////////////////////////////////////////
 
-// Fruit.find().select('name').exec().then(function(fruits) {
-//   mongoose.connection.close();  
-  
-//   fruits.forEach(function(fruit) {
-//       console.log(fruit.name);
-//     });
-//   }).catch(function(err) {
-//     console.log(err);
-//   });
+  // Fruit.find().select('name').exec().then(function(fruits) {
+  //   mongoose.connection.close();  
+
+  //   fruits.forEach(function(fruit) {
+  //       console.log(fruit.name);
+  //     });
+  //   }).catch(function(err) {
+  //     console.log(err);
+  //   });
 
   // Tank.find({ size: 'small' }).where('createdDate').gt(oneYearAgo).exec(callback);
 
 
   ///////////////////////////////////////////// Update /////////////////////////////////////////////////
 
-  Fruit.updateOne({_id: "64343016fe693b46f1b4965f"} , {name: "Peach" , rating: 10 , review: "Peaches are truely lovely!"}).then(function() {
-    console.log("Succesfully updated the document!");
-  }).catch(function(err) {
-    console.log(err);
-  });
+  // Fruit.updateOne({_id: "64343016fe693b46f1b4965f"} , {name: "Peach" , rating: 10 , review: "Peaches are truely lovely!"}).then(function() {
+  //   console.log("Succesfully updated the document!");
+  // }).catch(function(err) {
+  //   console.log(err);
+  // });
 
 
-    ///////////////////////////////////////////// Delete /////////////////////////////////////////////////
+  ///////////////////////////////////////////// Delete /////////////////////////////////////////////////
 
-    Fruit.deleteMany({name: "Apple2"}).then(function() {
-      mongoose.connection.close();
-      console.log("The document was succesfully deleted!");
-    }).catch(function(err) {
-      console.log(err);
-    })
+  // Fruit.deleteMany({name: "Apple2"}).then(function() {
+  //   mongoose.connection.close();
+  //   console.log("The document was succesfully deleted!");
+  // }).catch(function(err) {
+  //   console.log(err);
+  // });
 }
