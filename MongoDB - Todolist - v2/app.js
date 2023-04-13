@@ -29,12 +29,20 @@ const createItemSchema = () => {
 }
 
 const createNewItems = async (model, newItem) => {
-    await newItem.save().then(() => {
+    return await newItem.save().then(() => {
         return true;
     }).catch((err) => {
         console.log(err);
         return false;
     });
+}
+
+const deleteItem = async(model , id) => {
+    return await model.findByIdAndDelete(id)
+    .then(()=>{
+        console.log("Succesfully deleted the item.");
+    })
+    .catch(err => console.log(err));
 }
 
 const getRoutes = async() => {
@@ -62,6 +70,13 @@ const getRoutes = async() => {
             done: false
         }))
         res.redirect(301 ,"/" );
+    });
+
+    app.post("/delete" , (req , res) => {
+        const itemID =  req.body.delete;
+        deleteItem(Item , itemID);
+
+        res.redirect(301 , "/");
     });
 
     app.post("/work", (req, res) => {
