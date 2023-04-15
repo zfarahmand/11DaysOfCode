@@ -56,6 +56,17 @@ const createNewDocuments = async (newDocument) => {
     })
 }
 
+const createCustomListItem = async (ItemModel, ListModel, itemName, listName) => {
+    const newCreatedItem = new ItemModel({
+        name: itemName,
+        done: false
+    });
+    await ListModel.findOne({ name: listName }).then((foundList) => {
+        foundList.items.push(newCreatedItem);
+        foundList.save()
+    }).catch(err => console.log(err));
+};
+
 const deleteItem = async (model, id) => {
     return await model.findByIdAndDelete(id)
         .then(() => {
@@ -63,6 +74,15 @@ const deleteItem = async (model, id) => {
         })
         .catch(err => console.log(err));
 }
+
+// const deleteCustomItem = async (ListModel, listName, itemName) => {
+//     await ListModel.findOne({ name: listName }).then((foundList) => {
+//         if (foundList.items.some(item => item.name === itemName)) {
+//             const item = foundList.items.find(item => item.name == itemName);
+//             foundList.items.pop(item);
+//         }
+//     }).catch(err => console.log(err));
+// }
 
 const getRoutes = async () => {
     const Item = await createItemSchema();
@@ -86,7 +106,7 @@ const getRoutes = async () => {
         createNewDocuments(new Item.model({
             name: req.body.newItem,
             done: false
-        }))
+        }));
         res.redirect(301, "/");
     });
 
@@ -118,13 +138,27 @@ const getRoutes = async () => {
             res.redirect("/" + customListName);
         }
         else {
-            console.log(isListThere);
-
             res.render("index", {
                 listTitle: customListName + " Items",
                 newItems: isListThere.items,
                 redirect: "/" + customListName
             });
+        }
+    });
+
+    app.post("/:customListName", async (req, res) => {
+        // First: Check if there's a list named this parameter
+        // Second: If there isn't, simply redirect to the root rout
+        // Third: If there's one, create the item and add it to the certain list
+        const customListName = req.params.customListName;
+        const isListThere = await List.model.findOne({ name: customListName }).exec();
+
+        if (Object.is(isListThere, null)) {
+            res.redirect("/");
+        }
+        else {
+            createCustomListItem(Item.model, List.model, req.body.newItem, customListName);
+            res.redirect("/" + customListName);
         }
     });
 
