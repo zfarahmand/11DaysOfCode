@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
 
-main().then(async() => {
+main().then(async () => {
     await getRoutes();
 }).catch(err => console.log(err));
 
@@ -25,38 +25,56 @@ const createItemSchema = () => {
         },
         done: Boolean
     });
-    return new mongoose.model("Item", itemSchema);
+    Item = new mongoose.model("Item", itemSchema);
+    return {
+        schema: itemSchema,
+        model: Item
+    };
 }
 
-const createNewItems = async (model, newItem) => {
-    return await newItem.save().then(() => {
+const createListSchema = () => {
+    const listSchema = new mongoose.Schema({
+        name: {
+            type: String,
+            required: true
+        },
+        items: [Item.schema]
+    });
+    const List = new mongoose.model("List", listSchema);
+    return {
+        schema: listSchema,
+        model: List
+    };
+}
+
+const createNewDocuments = async (newDocument) => {
+    await newDocument.save().then(() => {
         return true;
     }).catch((err) => {
         console.log(err);
         return false;
-    });
-}
-
-const deleteItem = async(model , id) => {
-    return await model.findByIdAndDelete(id)
-    .then(()=>{
-        console.log("Succesfully deleted the item.");
     })
-    .catch(err => console.log(err));
 }
 
-const getRoutes = async() => {
-    const Item = await createItemSchema();
-    const items = await Item.find({done:false}).select('name').exec();
+const deleteItem = async (model, id) => {
+    return await model.findByIdAndDelete(id)
+        .then(() => {
+            console.log("Succesfully deleted the item.");
+        })
+        .catch(err => console.log(err));
+}
 
-    // app.get("/work", (req, res) => {
-    //     res.render("index", { listTitle: "لیست کاری", newItems: workItems, redirect: "/work" });
-    // });
-    
-    app.get("/" , (req , res) => {
+const getRoutes = async () => {
+    const Item = await createItemSchema();
+    const items = await Item.model.find({ done: false }).select('name').exec();
+
+    const List = await createListSchema();
+
+
+    app.get("/", (req, res) => {
         const farsiDate = date.getDate();
         const farsiDateFormatted = farsiDate.dayName + "," + farsiDate.day + " ام " + farsiDate.month;
-    
+
         res.render("index", {
             listTitle: farsiDateFormatted,
             newItems: items,
@@ -64,29 +82,52 @@ const getRoutes = async() => {
         });
     });
 
-    app.post("/" , (req , res) => {
-        createNewItems(Item , new Item({
+    app.post("/", (req, res) => {
+        createNewDocuments(new Item.model({
             name: req.body.newItem,
             done: false
         }))
-        res.redirect(301 ,"/" );
+        res.redirect(301, "/");
     });
 
-    app.post("/delete" , (req , res) => {
-        const itemID =  req.body.delete;
-        deleteItem(Item , itemID);
+    app.post("/delete", (req, res) => {
+        const itemID = req.body.delete;
+        deleteItem(Item.model, itemID);
 
-        res.redirect(301 , "/");
+        res.redirect(301, "/");
     });
 
-    app.post("/work", (req, res) => {
-        workItems.push(req.body.newItem);
-        res.redirect("/work");
-    });
-    
     app.get("/about", (req, res) => {
         res.render("about", {});
     });
+
+    app.get('/favicon.ico', (req, res) => {
+        return 'your faveicon'
+    });
+
+    app.get("/:customListName", async (req, res) => {
+        const customListName = req.params.customListName;
+        const isListThere = await List.model.findOne({ name: customListName }).exec();
+
+
+        if (Object.is(isListThere, null)) {
+            createNewDocuments(new List.model({
+                name: customListName,
+                items: []
+            }));
+            res.redirect("/" + customListName);
+        }
+        else {
+            console.log(isListThere);
+
+            res.render("index", {
+                listTitle: customListName + " Items",
+                newItems: isListThere.items,
+                redirect: "/" + customListName
+            });
+        }
+    });
+
 }
 
 app.listen(3000, () => {
