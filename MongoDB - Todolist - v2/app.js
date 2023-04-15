@@ -2,7 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
+const _ = require("lodash");
 const date = require(__dirname + "/date.js");
+const defaultListName = "Default";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -75,14 +77,10 @@ const deleteItem = async (model, id) => {
         .catch(err => console.log(err));
 }
 
-// const deleteCustomItem = async (ListModel, listName, itemName) => {
-//     await ListModel.findOne({ name: listName }).then((foundList) => {
-//         if (foundList.items.some(item => item.name === itemName)) {
-//             const item = foundList.items.find(item => item.name == itemName);
-//             foundList.items.pop(item);
-//         }
-//     }).catch(err => console.log(err));
-// }
+const deleteCustomItem = async (ListModel, listName, itemID) => {
+    await ListModel.findOneAndUpdate({name: listName }, { $pull: { items: { _id: itemID } } })
+        .catch(err => console(err));
+}
 
 const getRoutes = async () => {
     const Item = await createItemSchema();
@@ -97,6 +95,7 @@ const getRoutes = async () => {
 
         res.render("index", {
             listTitle: farsiDateFormatted,
+            listName: defaultListName,
             newItems: items,
             redirect: "/"
         });
@@ -112,9 +111,16 @@ const getRoutes = async () => {
 
     app.post("/delete", (req, res) => {
         const itemID = req.body.delete;
-        deleteItem(Item.model, itemID);
+        const listName = req.body.list_name;
+        if (listName === defaultListName) {
+            deleteItem(Item.model, itemID);
+            res.redirect(301, "/");
+        }
+        else {
+            deleteCustomItem(List.model , listName , itemID );
+            res.redirect(301, "/" + listName);
+        }
 
-        res.redirect(301, "/");
     });
 
     app.get("/about", (req, res) => {
@@ -126,7 +132,7 @@ const getRoutes = async () => {
     });
 
     app.get("/:customListName", async (req, res) => {
-        const customListName = req.params.customListName;
+        const customListName = _.capitalize(req.params.customListName);
         const isListThere = await List.model.findOne({ name: customListName }).exec();
 
 
@@ -140,6 +146,7 @@ const getRoutes = async () => {
         else {
             res.render("index", {
                 listTitle: customListName + " Items",
+                listName: isListThere.name,
                 newItems: isListThere.items,
                 redirect: "/" + customListName
             });
