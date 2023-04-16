@@ -6,18 +6,40 @@ require("dotenv").config();
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
-app.set("view engie" , "ejs");
+app.set("view engine" , "ejs");
 app.use(express.static("public"));
 
 
 main().then(async () => {
-    console.log("db connected");
+    await getRoutes();
 })
 .catch(err => console.log(err));
 
 
 async function main() {
     await mongoose.connect(process.env.DB_STR).catch(err => console.log(err));
+}
+
+const getRoutes = async () => {
+    const Article = await createArticleSchema();
+}
+
+const createArticleSchema = async () => {
+    const articleSchema = await new mongoose.Schema({
+        title: {
+            type: String,
+            default: "No title"
+        },
+        content: {
+            type: String,
+            required: true
+        }
+    });
+    const articleModel = await new mongoose.model("Article" , articleSchema);
+    return {
+        schema: articleSchema,
+        model: articleModel
+    }
 }
 
 app.listen(3000 , () => {
