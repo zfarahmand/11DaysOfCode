@@ -2,6 +2,8 @@ const express = require("express");
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const encrypt = require("mongoose-encryption");
+const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 const app = express();
@@ -52,6 +54,7 @@ const createUserSchema = async () => {
             required: true
         }
     });
+    userSchema.plugin(encrypt , { encryptionKey: process.env.ENC_KEY, signingKey: process.env.SIG_KEY ,encryptedFields: ['password'] });
 
     const userModel = await new mongoose.model("User", userSchema);
 
@@ -62,25 +65,31 @@ const createUserSchema = async () => {
 }
 
 const registerUser = async (userModel, userEmail, userPassword, res) => {
-    const newUser = await new userModel({
-        email: userEmail,
-        password: userPassword
-    });
+    await bcrypt.genSalt(parseInt(process.env.SALT_ROUNDS)).then((salt) => {
+        bcrypt.hash(userPassword, salt).then(async (hash) => {
+            const newUser = await new userModel({
+                email: userEmail,
+                password: hash
+            });
+            return await newUser.save().then(() => {
+                res.render("secrets");
+            }).catch(err => console.log(err));
 
-    return await newUser.save().then(() => {
-        res.render("secrets");
+
+        }).catch(err => console.log(err));
     }).catch(err => console.log(err));
 }
 
 const loginUser = async (userModel, userEmail, userPassword, res) => {
-    const foundUser = await userModel.findOne({ email: userEmail }).exec().then((foundUser) => {
+    const foundUser = await userModel.findOne({ email: userEmail }).exec().then(async (foundUser) => {
         if (foundUser) {
-            if (foundUser.password === userPassword) {
+            if (await bcrypt.compare(userPassword, foundUser.password)) {
                 res.render("secrets");
             }
         }
     }).catch(err => console.log(err));
 }
+
 
 app.listen(process.env.SERVER_PORT, () => {
     console.log("Server succesfully started on port 3000");
