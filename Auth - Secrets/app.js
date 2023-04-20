@@ -121,8 +121,28 @@ const getRoutes = async () => {
     });
 
     app.get("/secrets", function (req, res) {
+        User.find({"secret": {$ne: null}}).then((foundUsers) => {
+            if(foundUsers) {
+                res.render("secrets" , {
+                    usersWithSecrets: foundUsers
+                });
+            }
+        }).catch(err => console.log(err));
+    });
+
+    app.get("/submit" , (req , res) => {
         if (req.isAuthenticated()) {
-            res.render("secrets");
+            res.render("submit");
+        }
+        else {
+            res.redirect("/login");
+        }
+    });
+
+    app.post("/submit" , async (req , res) => {
+        if (req.isAuthenticated()) {
+            // console.log(req.user.id);
+            await createSecret(User ,  req.body.secret , req , res);
         }
         else {
             res.redirect("/login");
@@ -159,6 +179,26 @@ const loginUser = (User, req, res) => {
             });
         }
     });
+}
+
+
+const createSecret = async (User , secret , req , res) => {
+    if (req.isAuthenticated()) {
+        const foundUser = await User.findById(req.user.id).exec().then((foundUser) => {
+            if(!foundUser) {
+                console.log("No user with given credentials.");
+            }
+            else {
+                foundUser.secret = secret;
+                foundUser.save().then(() => {
+                    res.redirect("/secrets");
+                }).catch(err => console.log(err));
+            }
+        }).catch(err => console.log(err));
+    }
+    else {
+        res.redirect("/login");
+    }
 }
 
 
